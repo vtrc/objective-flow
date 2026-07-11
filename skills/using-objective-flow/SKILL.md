@@ -20,6 +20,7 @@ Use this skill to keep the agent inside the method instead of improvising.
 - Use `explore-options` before choosing a path when several paths could work.
 - Use `shape-approach` before planning or execution when a direction has been chosen but the shape is not agreed.
 - Use `plan-work` before executing multi-step or consequential work.
+- Use `dispatch-parallel-agents` when the objective splits cleanly into separate tracks that can move forward at the same time.
 - Use `execute-plan` only when there is an approved plan or the work is clearly small and reversible.
 - Use `review-quality` before approval, handoff, release, or completion of meaningful work.
 - Use `confirm-completion` only after review passes.
@@ -29,6 +30,7 @@ Use this skill to keep the agent inside the method instead of improvising.
 
 - Stop if a missing answer would materially change the next action; ask one question.
 - Stop if the user has not approved a consequential direction or approach shape.
+- Stop and ask before splitting into parallel agents if a single branch would still keep the work clear enough.
 - Stop if execution evidence contradicts the plan, objective, or constraints.
 - Stop if review finds a material gap; correct or explicitly transfer the gap before completion.
 - Never claim completion from effort, intent, or partial progress.

@@ -15,6 +15,7 @@ Guide work through the smallest lifecycle that preserves clarity, consent, evide
    - needs options or a new solution: `explore-options`
    - has a chosen direction but no agreed shape: `shape-approach`
    - has an approved approach shape and multiple steps: `plan-work`
+   - can move forward as separate tracks: `dispatch-parallel-agents`
    - has a plan: `execute-plan`
    - needs a choice: `choose-option`
    - is failing or recurring: `diagnose-cause`
@@ -33,6 +34,7 @@ frame -> explore -> shape -> plan -> execute -> review -> complete -> learn
 
 - Do not plan before the objective and success condition are clear.
 - Do not choose a consequential direction before viable options have been compared.
+- Do not split work into parallel branches unless each track can stand on its own and the merge path is clear.
 - Do not execute a consequential solution before the approach shape is understood and approved.
 - Do not execute multi-step work before there is a plan with validation and stop conditions.
 - Do not continue execution after a failed validation without adapting the plan or diagnosing the cause.

@@ -69,6 +69,24 @@ Se extraen lecciones reutilizables: qué funcionó, qué no, qué señales impor
 
 El flujo puede comprimirse para trabajos simples y reversibles, pero las revisiones y la verificación de cierre no deberían desaparecer. Comprimir significa hacer una fase de forma breve, no fingir que esa fase no existe.
 
+## Agentes en paralelo
+
+Objective Flow puede usar varios agentes en paralelo cuando el trabajo se divide en ramas independientes.
+
+Usa agentes en paralelo cuando:
+
+- las opciones son independientes,
+- las tareas no se bloquean entre sí,
+- y el coste de coordinación es menor que el tiempo que se ahorra.
+
+No uses agentes en paralelo cuando:
+
+- un paso depende del resultado de otro,
+- la decisión todavía no está clara,
+- o el trabajo es tan pequeño que el paralelismo solo añade ruido.
+
+Así el flujo se mantiene disciplinado: el paralelismo es una decisión deliberada, no el valor por defecto.
+
 ## Instalación
 
 Copia las carpetas dentro de `skills/` al directorio de habilidades que use tu cliente de agentes.

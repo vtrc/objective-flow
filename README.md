@@ -37,6 +37,24 @@ frame -> explore -> shape -> plan -> execute -> review -> complete -> learn
 
 The flow can be compressed for simple, reversible work, but review and completion checks should not disappear. Compression means doing a phase briefly, not pretending the phase does not exist.
 
+## Parallel agents
+
+Objective Flow can use multiple agents in parallel when the work splits into independent branches.
+
+Use parallel agents when:
+
+- the options are independent,
+- the tasks do not block each other,
+- and the extra coordination cost is lower than the time saved.
+
+Do not use parallel agents when:
+
+- one step depends on the result of another,
+- the decision is still unclear,
+- or the work is small enough that parallelism would add noise.
+
+This keeps the workflow disciplined: parallelism is a deliberate choice, not the default.
+
 ## Install
 
 Copy the folders inside `skills/` into the skill location used by your agent client.

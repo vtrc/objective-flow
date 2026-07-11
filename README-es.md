@@ -35,6 +35,38 @@ Está inspirado en [Superpowers](https://github.com/obra/superpowers), pero ampl
 frame -> explore -> shape -> plan -> execute -> review -> complete -> learn
 ```
 
+### 1. `frame` — definir el objetivo
+
+Se aclara qué se quiere lograr, por qué importa, qué está incluido y qué no. Aquí se eliminan ambigüedades antes de avanzar.
+
+### 2. `explore` — explorar opciones
+
+Se comparan alternativas reales, con sus ventajas, riesgos y supuestos. El objetivo es entender el espacio de decisión antes de elegir.
+
+### 3. `shape` — dar forma al enfoque
+
+Se toma la dirección elegida y se convierte en un enfoque concreto y ejecutable. Es el puente entre decidir y planificar.
+
+### 4. `plan` — planificar el trabajo
+
+Se divide el enfoque en pasos claros, ordenados y verificables. El plan debe ser suficientemente preciso para ejecutarse sin improvisación innecesaria.
+
+### 5. `execute` — ejecutar
+
+Se realiza una acción validada a la vez, recogiendo evidencia de lo que pasó. Si aparece un bloqueo o una señal nueva, se ajusta el plan con criterio.
+
+### 6. `review` — revisar la calidad
+
+Se comprueba si lo hecho realmente cumple lo esperado: decisiones, entregables, traspasos y riesgos pendientes. Esta fase evita cerrar demasiado pronto.
+
+### 7. `complete` — confirmar el cierre
+
+Se verifica que el objetivo original sí quedó satisfecho, no solo que “se hizo algo”. Aquí se decide si la tarea termina o si falta corregir algo.
+
+### 8. `learn` — capturar aprendizajes
+
+Se extraen lecciones reutilizables: qué funcionó, qué no, qué señales importan y qué haría mejor la próxima vez. Esto convierte el trabajo en conocimiento.
+
 El flujo puede comprimirse para trabajos simples y reversibles, pero las revisiones y la verificación de cierre no deberían desaparecer. Comprimir significa hacer una fase de forma breve, no fingir que esa fase no existe.
 
 ## Instalación

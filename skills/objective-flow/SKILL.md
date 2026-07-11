@@ -16,6 +16,9 @@ Guide work through the smallest lifecycle that preserves clarity, consent, evide
    - has a chosen direction but no agreed shape: `shape-approach`
    - has an approved approach shape and multiple steps: `plan-work`
    - can move forward as separate tracks: `dispatch-parallel-agents`
+   - needs managed multi-agent merge/review: `coordinate-subagents`
+   - needs a full split-execute-merge-review loop: `subagent-driven-development`
+   - needs isolated Git branch spaces: `manage-worktrees`
    - has a plan: `execute-plan`
    - needs a choice: `choose-option`
    - is failing or recurring: `diagnose-cause`
@@ -30,17 +33,33 @@ Guide work through the smallest lifecycle that preserves clarity, consent, evide
 frame -> explore -> shape -> plan -> execute -> review -> complete -> learn
 ```
 
+## Routing Discipline
+
+- Pick one primary skill before any other work in the phase.
+- Choose one primary next skill, not a bundle of unrelated skills.
+- Prefer the narrowest skill that still preserves correctness.
+- If two skills appear equally valid, pause and resolve the ambiguity before proceeding.
+- Only expand into parallel or coordinated skills when the objective clearly justifies it.
+- Do not switch skill families mid-phase unless new evidence forces a return.
+- Return to an earlier skill when new evidence changes the branch.
+
 ## Enforce Gates
 
 - Do not plan before the objective and success condition are clear.
 - Do not choose a consequential direction before viable options have been compared.
+- Do not ask for parallel work, coordination, or worktrees unless the split is justified by the objective.
+- Do not let more than one primary skill drive the same phase.
 - Do not split work into parallel branches unless each track can stand on its own and the merge path is clear.
+- Do not start coordinated subagent work without a merge and review plan.
+- Do not create a worktree unless the split needs isolation and Git is actually the right backing store.
+- Do not route around the workflow just because the task feels familiar.
 - Do not execute a consequential solution before the approach shape is understood and approved.
 - Do not execute multi-step work before there is a plan with validation and stop conditions.
 - Do not continue execution after a failed validation without adapting the plan or diagnosing the cause.
 - Do not close meaningful work without an explicit quality review.
 - Ask one clarifying question at a time when a missing answer materially changes the next move.
 - Return to an earlier phase when new evidence invalidates an assumption.
+- Do not combine parallel routing and worktree routing unless the split truly needs both.
 - Do not call work complete until review has passed and completion is checked against the original objective and constraints.
 
 ## Scale The Process

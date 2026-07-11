@@ -23,6 +23,8 @@ Keep it as one branch when:
 - one step clearly depends on another,
 - or splitting would just create extra chatter.
 
+If Git is available and the split will produce separate lines of work, prefer assigning each line to its own worktree before the subagents start.
+
 ## How to split
 
 1. Name the separate tracks.

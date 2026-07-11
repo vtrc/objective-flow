@@ -2,6 +2,16 @@
 
 This repository defines a portable **Agent Skills** system. Keep changes small, explicit, and easy to review.
 
+## Harness support
+
+- **Codex**: `.codex-plugin/plugin.json`
+- **Claude**: `CLAUDE.md`
+- **OpenCode**: `OPENCODE.md`
+- Shared rules: `docs/HARNESS-BOOTSTRAP.md` and `docs/ROUTING-DISCIPLINE.md`
+
+## Startup behavior
+Follow the shared bootstrap guidance and keep the lifecycle strict from frame through learn.
+
 ## What this repo is
 
 - `skills/` contains the actual skills, one folder per skill.

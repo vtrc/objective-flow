@@ -72,6 +72,21 @@ mkdir -p .agents/skills
 cp -R skills/* .agents/skills/
 ```
 
+## Harness support
+
+This repo includes:
+
+- `.codex-plugin/plugin.json` for Codex-style plugin startup,
+- `CLAUDE.md` for Claude Code project guidance,
+- `OPENCODE.md` for OpenCode project guidance,
+- `AGENTS.md` for project-level agent instructions,
+- and the shared `skills/` directory for clients that load Agent Skills directly.
+
+Shared bootstrap and routing details live in:
+
+- `docs/HARNESS-BOOTSTRAP.md`
+- `docs/ROUTING-DISCIPLINE.md`
+
 ## Compatibility
 
 Objective Flow follows the common Agent Skills shape:

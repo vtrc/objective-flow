@@ -1,0 +1,4 @@
+interface:
+  display_name: "Objective Flow"
+  short_description: "Guide any objective through a complete workflow"
+  default_prompt: "Use Objective Flow to help me work through this objective."

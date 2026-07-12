@@ -57,20 +57,23 @@ This keeps the workflow disciplined: parallelism is a deliberate choice, not the
 
 ## Install
 
-Copy the folders inside `skills/` into the skill location used by your agent client.
+Use the installation path for your agent client:
 
-Common locations:
+- **Codex**: install the repository plugin; `.codex-plugin/plugin.json` points to `skills/`.
+- **Claude**: install the repository plugin from `.claude-plugin/`; `CLAUDE.md` provides project guidance.
+- **OpenCode**: add the Git-backed plugin to `opencode.json`:
 
-- OpenCode project skills: `.agents/skills/`
-- OpenCode global skills: `~/.config/opencode/skills/`
-- Other Agent Skills-compatible clients: copy each folder so it contains its own `SKILL.md`
+  ```json
+  {
+    "plugin": [
+      "objective-flow@git+https://github.com/vtrc/objective-flow.git"
+    ]
+  }
+  ```
 
-Example:
+- **Other Agent Skills-compatible clients**: copy each folder inside `skills/` so it contains its own `SKILL.md`.
 
-```bash
-mkdir -p .agents/skills
-cp -R skills/* .agents/skills/
-```
+See [`docs/INSTALLATION.md`](docs/INSTALLATION.md) for the complete installation and verification steps.
 
 ## Harness support
 

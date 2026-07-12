@@ -57,20 +57,23 @@ Así el flujo se mantiene disciplinado: el paralelismo es una decisión delibera
 
 ## Instalación
 
-Copia las carpetas dentro de `skills/` al directorio de habilidades que use tu cliente de agentes.
+Utiliza la ruta de instalación correspondiente a tu cliente de agentes:
 
-Ubicaciones comunes:
+- **Codex**: instala el plugin del repositorio; `.codex-plugin/plugin.json` apunta a `skills/`.
+- **Claude**: instala el plugin del repositorio desde `.claude-plugin/`; `CLAUDE.md` proporciona la guía del proyecto.
+- **OpenCode**: añade el plugin basado en Git a `opencode.json`:
 
-- Habilidades de proyecto en OpenCode: `.agents/skills/`
-- Habilidades globales en OpenCode: `~/.config/opencode/skills/`
-- Otros clientes compatibles con Agent Skills: copia cada carpeta para que contenga su propio `SKILL.md`
+  ```json
+  {
+    "plugin": [
+      "objective-flow@git+https://github.com/vtrc/objective-flow.git"
+    ]
+  }
+  ```
 
-Ejemplo:
+- **Otros clientes compatibles con Agent Skills**: copia cada carpeta dentro de `skills/` para que contenga su propio `SKILL.md`.
 
-```bash
-mkdir -p .agents/skills
-cp -R skills/* .agents/skills/
-```
+Consulta [`docs/INSTALLATION.md`](docs/INSTALLATION.md) para ver los pasos completos de instalación y verificación.
 
 ## Soporte por harness
 

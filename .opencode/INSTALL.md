@@ -1,17 +1,32 @@
 # OpenCode install
 
-Use the shared `OPENCODE.md` guidance plus the `skills/` directory when installing Objective Flow into OpenCode.
+Objective Flow is installed in OpenCode as a Git-backed plugin.
 
-## What to copy
+## Install
 
-- `OPENCODE.md`
-- `skills/`
+Add this entry to the consuming project's `opencode.json`:
 
-## If OpenCode expects a plugin folder
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "objective-flow@git+https://github.com/vtrc/objective-flow.git"
+  ]
+}
+```
 
-Use `.opencode/plugins/objective-flow/` as the local plugin root.
+Restart OpenCode after changing the configuration. The plugin at
+`.opencode/plugins/objective-flow.js` registers the canonical `skills/`
+directory and injects `using-objective-flow` into the first user message.
 
-## Goal
+## Verify
 
-The goal is to keep Objective Flow available as the default workflow for non-trivial objectives in OpenCode without needing to rebuild the repo layout.
+From the repository root:
 
+```bash
+node --check .opencode/plugins/objective-flow.js
+test -f skills/using-objective-flow/SKILL.md
+```
+
+The plugin declaration acquires the repository and loads the runtime plugin;
+it is not necessary to copy the skills manually.

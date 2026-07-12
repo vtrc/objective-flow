@@ -8,7 +8,7 @@
       "name": "objective-flow",
       "source": {
         "source": "local",
-        "path": "./plugins/objective-flow"
+        "path": "."
       },
       "policy": {
         "installation": "AVAILABLE",

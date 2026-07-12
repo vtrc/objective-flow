@@ -1,65 +1,98 @@
 ---
 name: subagent-driven-development
-description: "Run a split objective through a full subagent loop: divide the work, assign branches, collect outcomes, compare results, and consolidate the final answer. Use when parallel tracks need an explicit end-to-end orchestration flow."
+description: "Trigger: subagent workflow, split execution, collect results, compare, consolidate, and review. Orchestrate full split-to-finish agent work."
 ---
 
 # Subagent-Driven Development
 
-Use this skill when the objective should be handled by multiple agents and the work needs a full orchestration loop, not just a parallel start.
+## Activation Contract
+Use this skill when an approved objective will be executed through multiple agent tracks and needs an end-to-end operating loop: split, assign, execute, collect, compare, consolidate, review, and hand off. It applies to substantial standard or full workflow work across software, documentation, research, operations, or mixed deliverables.
 
-## Flow
+## When Not To Use
+Do not use this skill before a split is justified by `dispatch-parallel-agents`. Do not use it for trivial work, single-owner sequential work, or option exploration where the goal is to compare possible strategies before assigning execution tracks.
 
-1. Confirm the objective can be split.
-2. Decide the branch boundaries.
-3. If Git worktrees will help, use `manage-worktrees` before the branches start.
-4. Assign one branch per subagent.
-5. Capture branch outputs in a comparable form.
-6. Merge, compare, or choose between branch results.
-7. Review the combined result before completion.
+## Required Input
+- Objective, success criteria, and accepted scope.
+- Approved Split Decision.
+- Track owners, boundaries, forbidden overlap, and output contract.
+- Worktree or workspace decision.
+- Validation expectations for every track.
+- Merge or consolidation owner.
+- Required review gates and completion path.
 
-## Hard requirements
+## Hard Gate
+Do not start until split boundaries, owners, output contracts, worktree/workspace decisions, merge strategy, and review gates are explicit. Do not consolidate if outputs are not comparable. Do not finish until both mandatory reviews pass or risks are explicitly accepted by the owner: **Spec Compliance Review** and **Quality Review**.
 
-- Do not start the split until the branch boundaries are explicit.
-- Do not run the branches without a merge plan.
-- Do not let one subagent own two unrelated tracks.
-- Do not skip review after the branches finish.
+## Process
+1. **Split**: confirm the Split Decision, independence evidence, dependencies, forbidden overlap, coordination cost, and worktree/workspace need.
+2. **Assign**: give each owner one track, input packet, expected output, validation evidence, stop rules, and checkpoint requirements.
+3. **Execute**: keep tracks inside scope; route blockers, scope drift, and ownership conflicts to the consolidation owner.
+4. **Collect**: require comparable outputs from every track: scope completed, artifacts changed, decisions, evidence, validation, risks, blockers, and merge readiness.
+5. **Compare**: check outputs against the objective and against each other; identify conflicts, duplicates, gaps, missing evidence, and changed assumptions.
+6. **Consolidate**: merge, select, combine, defer, reject, or block outputs according to the planned consolidation strategy. Preserve evidence for every accepted and rejected output.
+7. **Spec Compliance Review**: verify every track stayed within assigned scope, met its acceptance criteria, respected forbidden overlap, and produced required evidence.
+8. **Quality Review**: verify the consolidated result is coherent, maintainable, validated, low-risk enough to hand off, and not merely a pile of track outputs.
+9. Hand off branch outcome decisions to `finish-development-branch` and final completion decisions to `confirm-completion`.
 
-## Branch design
+## Required Artifact
+Produce a **Consolidation Report** with these fields:
 
-- Keep each branch small enough to be understandable on its own.
-- Give each branch one responsibility.
-- Avoid overlapping file ownership unless the merge plan is explicit.
-- If the branches disagree, stop and route to `choose-option`.
+- Objective, scope, and Split Decision reference.
+- Track assignments and worktree/workspace map.
+- Input and output contracts.
+- Execution checkpoint summary.
+- Collected branch or track outputs in comparable format.
+- Comparison results: agreements, conflicts, duplicates, gaps, missing evidence.
+- Consolidation decision and rationale.
+- Spec Compliance Review result with findings and required fixes.
+- Quality Review result with findings and required fixes.
+- Rejected, deferred, or preserved work.
+- Merge or branch outcome recommendation.
+- Residual risks and next handoff.
 
-## Worktree policy
+## Quality Checklist
+- Split, assignment, execution, collection, comparison, consolidation, and review all occurred in order.
+- Every track output uses the same output contract.
+- No non-comparable output was consolidated.
+- Spec Compliance Review is separate from Quality Review.
+- Review findings include evidence and owners.
+- Consolidation preserves decisions, rejected outputs, and risks.
+- Branch, cleanup, and completion handoffs are named.
 
-If the project uses Git and the branches may touch the same repo at the same time, create separate worktrees before starting the subagents.
-
-Use worktrees when:
-
-- the branches are independent,
-- the work will last long enough to justify setup,
-- and isolation reduces file collision risk.
-
-Do not use worktrees when:
-
-- the task is too small,
-- the project is not Git-backed,
-- or the branches already live in distinct files with low collision risk.
-
-## Output contract
-
-Each subagent should return:
-
-- what it changed or found,
-- what assumptions it used,
-- what remains unclear,
-- and whether the result is ready to merge or review.
+## Stop Rules
+Stop when the Split Decision is missing, an owner is absent, a track changes scope, output fields differ, evidence is missing, outputs are not comparable, merge ownership is unclear, Spec Compliance Review fails, or Quality Review fails. Do not consolidate until comparability and evidence are restored.
 
 ## Handoff
+- Use `dispatch-parallel-agents` before this skill when split value is not yet proven.
+- Use `coordinate-subagents` for operational assignment and checkpoint management inside the loop.
+- Use `manage-worktrees` when isolated Git-backed workspaces reduce real risk.
+- Use `receive-review-feedback` when Spec Compliance Review or Quality Review produces required fixes.
+- Use `finish-development-branch` for merge, PR, keep, discard, split, and cleanup decisions.
+- Use `confirm-completion` only after reviews and branch outcomes are explicit.
 
-- Use `dispatch-parallel-agents` to decide whether to split.
-- Use `coordinate-subagents` to manage the split execution.
-- Use `manage-worktrees` when the branches need isolated Git contexts.
-- Use `review-quality` on the combined result.
-- Use `confirm-completion` only after review passes.
+## Smoke Flow
+Input: “Run routing, planning, and review improvements via subagents.”
+
+Expected behavior: confirm Split Decision, assign two or more independent tracks, collect comparable outputs, block a track that lacks evidence, compare remaining outputs, consolidate only comparable work, run Spec Compliance Review, run Quality Review, and hand off branch closure.
+
+Expected artifact: Consolidation Report.
+
+Expected gate: fail if outputs are not comparable, if either mandatory review is skipped, or if consolidation discards evidence.
+
+Expected handoff: `receive-review-feedback` for failed review findings or `finish-development-branch` when branch outcome is ready.
+
+## Anti-Patterns
+- Calling ordinary parallel work “subagent-driven” without a Split Decision.
+- Assigning broad missions instead of bounded tracks.
+- Letting agents use different output formats.
+- Consolidating before comparing evidence.
+- Treating Spec Compliance Review and Quality Review as one vague approval.
+- Dropping rejected work or unresolved risk because it is inconvenient.
+- Claiming completion while branch outcomes or cleanup are undecided.
+
+## Acceptance Criteria
+- The Consolidation Report contains all required fields.
+- The process follows split -> assign -> execute -> collect -> compare -> consolidate -> review.
+- Outputs are comparable before consolidation.
+- Spec Compliance Review and Quality Review are both present with evidence.
+- Failed reviews or missing evidence block completion and name the next owner.

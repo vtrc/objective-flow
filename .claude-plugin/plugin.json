@@ -9,19 +9,11 @@
   "homepage": "https://github.com/vtrc/objective-flow",
   "repository": "https://github.com/vtrc/objective-flow",
   "license": "MIT",
-  "keywords": [
-    "objective-flow",
-    "agents",
-    "workflow",
-    "planning",
-    "parallel-agents",
-    "worktrees"
-  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Objective Flow",
     "shortDescription": "A generic workflow for any objective",
-    "longDescription": "Use Objective Flow to route non-trivial work through a strict lifecycle: frame, explore, shape, plan, execute, review, complete, and learn. It also supports parallel branches and coordinated subagents when work can be split safely.",
+    "longDescription": "Use Objective Flow to route non-trivial work through a strict lifecycle: frame, explore, shape, plan, execute, review, complete, and learn.",
     "developerName": "Victor",
     "category": "Productivity",
     "capabilities": [
@@ -32,8 +24,7 @@
     "defaultPrompt": [
       "Use Objective Flow for any non-trivial objective.",
       "Treat Objective Flow as the default path unless the request is clearly simple and reversible.",
-      "Use the shared bootstrap and routing rules in the repository docs.",
-      "If the work can be split safely, use parallel agents, coordinate them, and prefer worktrees when Git isolation helps."
+      "Use the shared bootstrap and routing rules in the repository docs."
     ],
     "screenshots": []
   }

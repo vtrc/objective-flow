@@ -1,68 +1,164 @@
 ---
 name: using-objective-flow
-description: Establish the Objective Flow discipline at the start of a conversation or objective. Use when beginning, resuming, routing, or coordinating any non-trivial objective so the agent selects the right skill, obeys gates, and does not skip review or completion checks.
+description: "Trigger: conversation start, resumed work, routing, or coordination for any non-trivial objective. Auto-enter Objective Flow from the user's first message, select one primary skill, enforce gates, and hand off explicitly."
+
 ---
 
 # Using Objective Flow
 
-Use this skill to keep the agent inside the method instead of improvising.
+Use this skill to start Objective Flow automatically instead of improvising. Its job is the first routing decision: decide whether the request is tiny enough to answer directly or meaningful enough to enter the lifecycle, then select exactly one primary skill for the current phase.
 
-## Required Startup
+## Activation Contract
 
-1. Identify the user's immediate objective and current phase.
-2. If the request is non-trivial, consequential, creative, multi-step, blocked, or ambiguous, invoke `objective-flow` immediately. Do not ask the user whether to use the workflow; use it.
-3. If the request is simple, answer directly but still check that the answer satisfies the request before closing.
-4. Announce the selected skill only when it changes the action being taken or pauses work.
+Activate from the user's first message, resumed context, or coordination request when the work is non-trivial, consequential, ambiguous, multi-step, blocked, creative, user-facing, evidence-sensitive, or likely to require a handoff.
+
+Use the smallest mode that preserves safety:
+
+- **Trivial mode:** tiny, reversible requests with obvious evidence can be answered directly after stating the objective and evidence check.
+- **Standard mode:** meaningful work routes to exactly one primary skill and produces the Routing Decision artifact.
+- **Full mode:** multi-phase, high-risk, blocked, or resumed work routes into `objective-flow` after the initial Routing Decision.
+
+## When Not To Use
+
+Do not use this skill as the primary executor when another Objective Flow skill has already been selected for the active phase and its required artifact is in progress. Continue that owning skill instead.
+
+Do not use this skill to bypass missing inputs, review, validation, or approval. If the next action is already a clear execution step under an approved plan, hand off to `execute-plan` instead of rerouting repeatedly.
+
+## Required Input
+
+Before routing, collect or infer only what is necessary for the next safe move:
+
+- user's request or resumed objective
+- known context, constraints, and affected audience
+- visible risk level and reversibility
+- current artifact, if one exists
+- approval state for consequential direction or scope
+- evidence needed to verify the next move
+
+If any missing input would change the selected skill or next action, ask one blocking question and stop.
+
+## Hard Gate
+
+Stop before action unless a Routing Decision can name exactly one primary skill, the required artifact for that skill, the evidence needed, and the next stop gate. If two skills could own the same next step, or if consequential work lacks approval, do not proceed.
+
+## Auto-Routing Process
+
+1. Read the first user message or resumed context as the routing input.
+2. Identify the immediate objective, current phase, affected audience, constraints, and risk level.
+3. Decide whether the request is trivial, standard, or full mode.
+4. Find the missing artifact that blocks progress.
+5. Select exactly one primary skill that owns that artifact.
+6. State one blocking question only when the answer would change the selected skill, approval state, or next action.
+7. Produce the Routing Decision artifact before any meaningful work begins.
+8. Hand off explicitly with the next skill, reason, required artifact, evidence, and stop gate.
 
 ## Routing Rules
 
-- Classify the request with one primary next skill before taking action.
-- Prefer the first matching specialized skill instead of stacking several at once.
-- If the objective could fit multiple routing rules, choose the narrowest one that still preserves correctness.
-- If two skills seem equally plausible, stop and resolve the ambiguity before continuing.
-- Use `frame-objective` before advice, planning, or action when the objective or success condition is unclear.
-- Use `explore-options` before choosing a path when several paths could work.
-- Use `shape-approach` before planning or execution when a direction has been chosen but the shape is not agreed.
-- Use `plan-work` before executing multi-step or consequential work.
-- Use `dispatch-parallel-agents` when the objective splits cleanly into separate tracks that can move forward at the same time.
-- Use `coordinate-subagents` when parallel tracks need a managed handoff, merge, or review step.
-- Use `subagent-driven-development` when the work needs a full split-execute-merge-review loop.
-- Use `manage-worktrees` when parallel Git branches need isolated filesystem contexts.
-- Default to the smallest skill that preserves correctness; do not escalate to parallelism unless the split is justified.
-- Use `execute-plan` only when there is an approved plan or the work is clearly small and reversible.
-- Use `review-quality` before approval, handoff, release, or completion of meaningful work.
-- Use `confirm-completion` only after review passes.
-- Use `capture-learning` when the result creates a reusable lesson.
-- Do not continue into a second skill until the first primary skill has produced its required output.
+| Condition | Primary skill |
+| --- | --- |
+| Objective, audience, constraints, success signal, non-goals, or decisions are unclear | `frame-objective` |
+| Several credible paths exist or criteria are unclear | `explore-options` |
+| Options are known but criteria conflict | `choose-option` |
+| Direction exists but scope, flow, validation, or dependencies are not shaped | `shape-approach` |
+| Work is multi-step, dependency-heavy, resumable, or consequential | `plan-work` |
+| Independent tracks can run in parallel with clear merge boundaries | `dispatch-parallel-agents` |
+| Branch outputs need comparison, consolidation, or handoff | `coordinate-subagents` |
+| Work needs split, execute, merge, and review as one loop | `subagent-driven-development` |
+| Git-backed parallel work needs isolated filesystem contexts | `manage-worktrees` |
+| Approved plan or tiny reversible action is ready | `execute-plan` |
+| Behavior is wrong, unstable, or unexplained | `troubleshoot` |
+| Deliverable, branch, decision, or output needs judgment | `review-quality` |
+| Review comments must be triaged and addressed | `receive-review-feedback` |
+| Git-backed development branch is ready to close | `finish-development-branch` |
+| Reviewed work is ready to close | `confirm-completion` |
+| Reusable lesson exists | `capture-learning` |
+| Objective Flow skills must be created or revised | `write-skills` |
 
-## Routing Priority
+## Required Artifact: Routing Decision
 
-When several paths seem possible, prefer this order:
+For standard or full mode, produce a Routing Decision with these fields:
 
-1. `frame-objective`
-2. `explore-options`
-3. `choose-option`
-4. `shape-approach`
-5. `plan-work`
-6. `dispatch-parallel-agents`
-7. `coordinate-subagents`
-8. `subagent-driven-development`
-9. `manage-worktrees`
-10. `execute-plan`
-11. `review-quality`
-12. `confirm-completion`
-13. `capture-learning`
+```markdown
+Objective: ...
+Mode: trivial | standard | full
+Current phase: ...
+Selected primary skill: ...
+Why this skill owns the next move: ...
+Required artifact: ...
+Evidence needed: ...
+Approval state: approved | missing | not needed
+Stop gate: ...
+Next handoff: ...
+```
 
-## Hard Gates
+For trivial mode, include at minimum the objective, evidence check, and closure condition in the response.
 
-- Stop if a missing answer would materially change the next action; ask one question.
-- Stop if the user has not approved a consequential direction or approach shape.
-- Stop if more than one primary skill would be active at the same time.
-- Stop and ask before splitting into parallel agents if a single branch would still keep the work clear enough.
-- Stop if execution evidence contradicts the plan, objective, or constraints.
-- Stop if review finds a material gap; correct or explicitly transfer the gap before completion.
-- Never claim completion from effort, intent, or partial progress.
+## Quality Checklist
 
-## Scale
+- [ ] The user's first meaningful message was routed without waiting for workflow opt-in.
+- [ ] Exactly one primary skill is selected.
+- [ ] The selected skill matches the current missing artifact.
+- [ ] The Routing Decision names the evidence needed and approval state.
+- [ ] Any blocking question is limited to one question and changes the next action.
+- [ ] The stop gate is observable enough to block progress.
+- [ ] The handoff names the next owning skill or the closure path.
 
-Use the smallest path that preserves correctness. A small task may compress phases into a few sentences, but it may not skip evidence, review, or completion checking.
+## Stop Rules
+
+- Stop if the selected skill is unclear or multiple skills would drive the same phase.
+- Stop if missing objective, audience, constraints, success signal, or current artifact would change the route.
+- Stop before shaping, planning, execution, or closure when consequential direction lacks approval.
+- Stop if evidence contradicts the objective, selected phase, or constraints.
+- Stop when review finds a critical gap or ownership is unclear.
+- Stop if the Routing Decision cannot name a required artifact, evidence, stop gate, and handoff.
+- Never claim completion from effort, intent, partial progress, or an unrouted next step.
+
+## Handoff
+
+- Normal path: hand off to the selected primary skill from the Routing Rules table.
+- Full lifecycle path: hand off to `objective-flow` when the work needs phase sequencing beyond the first selected skill.
+- Blocker path: hand off to `frame-objective` when missing objective context blocks routing, or ask one blocking question and stop.
+- Review path: hand off to `review-quality` before consequential closure.
+- Completion path: hand off to `confirm-completion` only after review and evidence are available.
+
+## Smoke Flow
+
+Input:
+
+> "Improve our onboarding emails; I have a few ideas but no clear direction."
+
+Expected behavior:
+
+- Select standard or full mode, not direct execution.
+- Choose `frame-objective` if audience, success signals, and constraints are unclear; choose `explore-options` only if those inputs are already clear and several paths need comparison.
+- Produce a Routing Decision naming the required artifact and evidence needed.
+- Stop if the agent cannot choose between `frame-objective` and `explore-options` without one blocking question.
+
+Expected artifact: Routing Decision.
+
+Expected handoff: `frame-objective` or one blocking question, not execution.
+
+Failure looks like: writing the emails immediately, selecting multiple primary skills, skipping approval state, or saying only "use Objective Flow" without an artifact.
+
+## Anti-Patterns
+
+- Asking the user whether to use Objective Flow for meaningful work.
+- Selecting several primary skills at once.
+- Treating routing as a prose explanation instead of a concrete artifact.
+- Executing consequential work before approval, evidence, or the owning skill is clear.
+- Rerouting repeatedly when a phase skill already owns the active artifact.
+- Claiming completion without review, validation, or a named closure path.
+
+## Acceptance Criteria
+
+This skill is complete only when all are true:
+
+- Every meaningful request yields exactly one selected primary skill or one blocking question.
+- The Routing Decision includes all required fields for standard and full mode.
+- The hard gate blocks ambiguous ownership and missing approval.
+- The smoke flow can fail when routing is skipped, multi-skill ownership is claimed, or the artifact is missing.
+- The handoff names the next owning skill, blocker path, review path, or completion path.
+
+## Output Contract
+
+Return the Routing Decision for standard or full mode. For trivial mode, return the direct answer plus objective, evidence check, and closure condition.

@@ -77,6 +77,8 @@ cp -R skills/* .agents/skills/
 This repo includes:
 
 - `.codex-plugin/plugin.json` for Codex-style plugin startup,
+- `.claude-plugin/` for Claude-style plugin metadata,
+- `.opencode/` for OpenCode installation metadata,
 - `CLAUDE.md` for Claude Code project guidance,
 - `OPENCODE.md` for OpenCode project guidance,
 - `AGENTS.md` for project-level agent instructions,
@@ -86,6 +88,9 @@ Shared bootstrap and routing details live in:
 
 - `docs/HARNESS-BOOTSTRAP.md`
 - `docs/ROUTING-DISCIPLINE.md`
+- `docs/PLAN-ARTIFACTS.md`
+- `docs/EXAMPLE-PLAN.md`
+- `docs/SMOKE-FLOWS.md`
 
 ## Compatibility
 
@@ -100,9 +105,7 @@ The folder name and the `name:` field in each `SKILL.md` are intentionally align
 
 ## Inspiration
 
-Objective Flow is inspired by Superpowers' disciplined agent workflow: explicit skill routing, staged thinking, planning before action, review gates, and completion checks.
-
-The difference is scope. Superpowers is optimized for software development workflows. Objective Flow keeps the same kind of discipline but makes it usable for any objective: work planning, decisions, learning, operations, personal organization, strategy, troubleshooting, and general problem solving.
+Objective Flow keeps the same kind of discipline as the source that inspired it, but makes it usable for any objective: work planning, decisions, learning, operations, personal organization, strategy, troubleshooting, and general problem solving.
 
 ## License
 
